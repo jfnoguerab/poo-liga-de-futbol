@@ -17,8 +17,8 @@ public class Jugador {
     public Jugador(){}
 
     public Jugador(String nombre, Equipo equipo) {
-        this.nombre = nombre;
-        this.equipo = equipo;
+        this.setNombre(nombre);
+        this.setEquipo(equipo);
         cont++;
         this.id = cont;
     }
@@ -34,6 +34,9 @@ public class Jugador {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+        if (this.nombre.length() > longestNameSize) {
+            longestNameSize = this.nombre.length();
+        }
     }
 
     public Equipo getEquipo() {
@@ -42,6 +45,11 @@ public class Jugador {
 
     public void setEquipo(Equipo equipo) {
         this.equipo = equipo;
+        if (this.equipo != null) {
+            if (this.equipo.getNombre().length() > longestTeamNameSize) {
+                longestTeamNameSize = this.equipo.getNombre().length();
+            }
+        }
     }
     
 
