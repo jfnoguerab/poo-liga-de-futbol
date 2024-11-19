@@ -9,11 +9,37 @@ import utils.MenuUtility;
 public class Application {
 
     private static Scanner scanner = new Scanner(System.in);
-    private static Jugador[] jugadoresArr = new Jugador[1];
-    private static Equipo[] equiposArr = new Equipo[1];
+    private static Jugador[] jugadoresArr = new Jugador[3];
+    private static Equipo[] equiposArr = new Equipo[3];
 
     public static void main(String[] args) {
         try {
+
+            // Definimos unos valores por defecto
+            Equipo eq1 = new Equipo("Warrios");
+            Equipo eq2 = new Equipo("Wildcats");
+            Equipo eq3 = new Equipo("Bulls");
+
+            Jugador jug1 = new Jugador("John Smith");
+            jug1.setEquipo(eq1);
+            
+            Jugador jug2 = new Jugador("Sara Smith");
+            jug2.setEquipo(eq2);
+            
+            Jugador jug3 = new Jugador("Juan Perez");
+            jug3.setEquipo(eq3);
+
+            // Asignamos los valores
+            equiposArr[0] = eq1;
+            equiposArr[1] = eq2;
+            equiposArr[2] = eq3;
+
+            jugadoresArr[0] = jug1;
+            jugadoresArr[1] = jug2;
+            jugadoresArr[2] = jug3;
+
+
+
             mainMenu();
         } catch (Exception e) {
             System.out.println();
@@ -40,6 +66,10 @@ public class Application {
                 "Asignar jugador a equipo",
                 "Mostrar lista de jugadores",
                 "Mostrar lista de equipos",
+                "Eliminar jugador",
+                "Eliminar equipo",
+                "Seleccionar jugador",
+                "Seleccionar equipo",
                 "Salir"
             };
 
@@ -67,6 +97,18 @@ public class Application {
                     mostrarEquipos();
                     break;
                 case 6:
+                    eliminarJugador();
+                    break;
+                case 7:
+                    eliminarEquipo();
+                    break;
+                case 8:
+                    seleccionarJugador();
+                    break;
+                case 9:
+                    seleccionarEquipo();
+                    break;
+                case 10:
                     showMenu = MenuUtility.exit();
                     break;
             }
@@ -187,6 +229,63 @@ public class Application {
         MenuUtility.header("Mostrar lista de equipos");
 
         Equipo.printAllEquipos(equiposArr, "No hay equipos registrados.");
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
+    
+    private static void eliminarJugador() {
+        MenuUtility.header("Eliminar jugador");
+
+        if (Jugador.isEmpty()) {
+            System.out.println("\n No hay jugadores registrados.");
+        } else {
+            System.out.println("\nLista de jugadores:");
+
+            Jugador.printAllJugadores(jugadoresArr, "");
+
+            // Solicitamos la selección del jugador a asignar
+            int indiceJugador = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del jugador correspondiente: ", 1, jugadoresArr.length);
+
+            Jugador delJugador = jugadoresArr[indiceJugador - 1];
+
+            // Mostramos un mensaje para validar si desea eliminar al jugador
+            Character[] opClearFilters = {'S', 'N'};
+            Character clearFilters = MenuUtility.solicitaCharacter(scanner, "\nSeguro que desea eliminar al jugador \""+delJugador.getNombre()+"\" [S/N]?", opClearFilters);
+    
+            if (clearFilters == 'S') {
+                //jugadoresArr = Arrays.copyOf(Jugador.eliminarJugador(jugadoresArr, delJugador), jugadoresArr.length - 1);
+                jugadoresArr = Jugador.eliminarJugador(jugadoresArr, delJugador);
+
+                System.out.println("\nEl jugador se eliminó exitosamente.");
+            }
+        }
+
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
+    private static void eliminarEquipo() {
+        MenuUtility.header("Eliminar equipo");
+
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
+    private static void seleccionarJugador() {
+        MenuUtility.header("Seleccionar jugador");
+
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
+    private static void seleccionarEquipo() {
+        MenuUtility.header("Seleccionar equipo");
+
 
         // Pausar la ejecución del programa hasta que presione ENTER
         ConsoleUtility.waitPressEnterKey(scanner);
