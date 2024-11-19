@@ -300,8 +300,114 @@ public class Application {
         ConsoleUtility.waitPressEnterKey(scanner);
     }
     
-    private static void seleccionarJugador() {
+    private static void seleccionarJugador() throws Exception {
         MenuUtility.header("Seleccionar jugador");
+
+        if (Jugador.isEmpty()) {
+            System.out.println("No hay jugadores registrados.");
+
+            // Pausar la ejecución del programa hasta que presione ENTER
+            ConsoleUtility.waitPressEnterKey(scanner);
+
+            return;
+        }
+
+        System.out.println("\nLista de jugadores:");
+
+        Jugador.printListJugadores(jugadoresArr, "");
+
+        // Solicitamos la selección del jugador a asignar
+        int indiceJugador = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del jugador que desea seleccionar: ", 1, jugadoresArr.length);
+
+        subMenuJugador(indiceJugador, jugadoresArr[indiceJugador - 1]);
+
+    }
+
+    private static void subMenuJugador(int indice, Jugador jugador) throws Exception {
+        boolean showMenu = true;
+        int opMenuUsu = 0;
+        // Menú
+        String[] menu = {
+            "Ver detalles",
+            "Cambiar nombre",
+            "Cambiar equipo",
+            "Volver al menú principal"
+        };
+
+        do {            
+            // Limpia la consola
+            ConsoleUtility.cleanScreen();
+    
+            MenuUtility.header("Jugador " + jugador.getNombre());
+            
+            System.out.println("Menú: ");
+    
+            // Muestra el menú y devuelve la opción válida ingresada por el usuario que este dentro del rango del menú
+            opMenuUsu = MenuUtility.createMenuAndGetOption(scanner, menu, "\nIngrese el número de la opción correspondiente: ");
+    
+            // Limpia la consola
+            ConsoleUtility.cleanScreen();
+    
+            switch (opMenuUsu) {
+                case 1:
+                    verDetalles(indice, jugador);
+                    break;
+                case 2:
+                    cambiarNombre(indice, jugador);
+                    break;
+                case 3:
+                    cambiarEquipo(indice, jugador);
+                    break;
+                case 4:
+                    showMenu = MenuUtility.exit("\nVolviendo al menú principal...\n", 1500);
+                    break;
+            }
+        } while (showMenu);
+    }
+
+    private static void verDetalles(int indice, Jugador jugador) {
+        MenuUtility.header("Ver detalles");
+
+        Jugador.printJugador(indice, jugador);
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
+    private static void cambiarNombre(int indice, Jugador jugador) {
+        MenuUtility.header("Cambiar nombre");
+
+        // Solicitamos los datos
+        String nombreJugador = MenuUtility.solicitarCadena(scanner, "Ingrese el nombre del jugador: ");
+
+        jugador.setNombre(nombreJugador);
+
+        jugadoresArr[indice - 1] = jugador;
+
+        System.out.println("\nEl jugador se actualizó existosamente.");
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+
+    private static void cambiarEquipo(int indice, Jugador jugador) {
+        MenuUtility.header("Cambiar equipo");
+
+        System.out.println("\nLista de equipos:");
+
+        Equipo.printAllEquipos(equiposArr, "");
+
+        // Solicitamos la selección del equipo a asignar
+        int indiceEquipo = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del equipo correspondiente (0 para ninguno): ", 0, equiposArr.length);
+
+        // Asignamos el equipo seleccionado al jugador seleccionado
+        if (indiceEquipo == 0) {
+            jugador.setEquipo(null);
+        } else {
+            jugador.setEquipo(equiposArr[indiceEquipo - 1]);
+        }
+
+        System.out.println("\nEl jugador se actualizó existosamente.");
 
 
         // Pausar la ejecución del programa hasta que presione ENTER
