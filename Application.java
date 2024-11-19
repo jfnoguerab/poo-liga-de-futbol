@@ -16,7 +16,7 @@ public class Application {
         try {
 
             // Definimos unos valores por defecto
-            Equipo eq1 = new Equipo("Warrios");
+            Equipo eq1 = new Equipo("warriors");
             Equipo eq2 = new Equipo("Celtics");
             Equipo eq3 = new Equipo("Bulls");
 
