@@ -2,7 +2,7 @@
 
 ### Actividad: Liga de fútbol I
 
-El objetivo de esta actividad es crear un proyecto para  gestionar los jugadores de una liga de fútbol. Deberás manejar equipos y jugadores con una relación de agregación, permitiendo al usuario interactuar con ellos a través de un menú en consola.
+El objetivo de esta actividad es crear un proyecto para gestionar los jugadores de una liga de fútbol. Deberás manejar equipos y jugadores con una relación de agregación, permitiendo al usuario interactuar con ellos a través de un menú en consola.
 
 Para esto deberás generar una clase `Jugador` y una `Equipo`. Para relacionar ambas clases vamos a utilizar una agregación, recomendamos que el jugador tenga un atributo del tipo `Equipo` para facilitar la resolución. Con esto, el menú deberá permitir realizar las siguientes acciones:
 
