@@ -252,10 +252,9 @@ public class Application {
 
             // Mostramos un mensaje para validar si desea eliminar al jugador
             Character[] opClearFilters = {'S', 'N'};
-            Character clearFilters = MenuUtility.solicitaCharacter(scanner, "\nSeguro que desea eliminar al jugador \""+delJugador.getNombre()+"\" [S/N]?", opClearFilters);
+            Character clearFilters = MenuUtility.solicitaCharacter(scanner, "\nSeguro que desea eliminar a \""+delJugador.getNombre()+"\" [S/N]?", opClearFilters);
     
             if (clearFilters == 'S') {
-                //jugadoresArr = Arrays.copyOf(Jugador.eliminarJugador(jugadoresArr, delJugador), jugadoresArr.length - 1);
                 jugadoresArr = Jugador.eliminarJugador(jugadoresArr, delJugador);
 
                 System.out.println("\nEl jugador se eliminó exitosamente.");
@@ -269,6 +268,32 @@ public class Application {
     
     private static void eliminarEquipo() {
         MenuUtility.header("Eliminar equipo");
+
+        if (Equipo.isEmpty()) {
+            System.out.println("\n No hay equipos registrados.");
+        } else {
+            System.out.println("\nLista de equipos:");
+
+            Equipo.printAllEquipos(equiposArr, "");
+
+            // Solicitamos la selección del equipo a asignar
+            int indiceEquipo = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del equipo correspondiente: ", 1, equiposArr.length);
+
+            Equipo delEquipo = equiposArr[indiceEquipo - 1];
+
+            // Mostramos un mensaje para validar si desea eliminar al equipo
+            Character[] opClearFilters = {'S', 'N'};
+            Character clearFilters = MenuUtility.solicitaCharacter(scanner, "\nSeguro que desea eliminar al equipo \""+delEquipo.getNombre()+"\" [S/N]?", opClearFilters);
+    
+            if (clearFilters == 'S') {
+                equiposArr = Equipo.eliminarEquipo(equiposArr, delEquipo);
+
+                // Eliminamos las relaciones del equipo con lo jugadores
+                Jugador.clearRelationshipWithEquipo(jugadoresArr, delEquipo);
+
+                System.out.println("\nEl equipo se eliminó exitosamente.");
+            }
+        }
 
 
         // Pausar la ejecución del programa hasta que presione ENTER

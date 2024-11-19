@@ -123,4 +123,12 @@ public class Jugador {
         }
         return jugadoresUpArr;
     }
+
+    public static void clearRelationshipWithEquipo(Jugador[] jugadoresArr, Equipo equipo) {
+        for (int i = 0; i < jugadoresArr.length; i++) {
+            if (jugadoresArr[i].getEquipo() == equipo) {
+                jugadoresArr[i].setEquipo(null);
+            }
+        }
+    }
 }

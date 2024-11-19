@@ -92,5 +92,18 @@ public class Equipo {
         // validamos si el contador de instancias está vacío
         return cont == 0;
     }
+
+    public static Equipo[] eliminarEquipo(Equipo[] equiposArr, Equipo equipo) {
+        Equipo[] equiposUpArr = new Equipo[equiposArr.length - 1];
+        int index = 0;
+        for (Equipo itemEquipo : equiposArr) {
+            if (itemEquipo != equipo) {
+                equiposUpArr[index] = itemEquipo;
+                index++;
+            }
+            
+        }
+        return equiposUpArr;
+    }
     
 }
