@@ -54,7 +54,7 @@ public class Jugador {
     
 
     public static void printAllJugadores(Jugador[] jugadores, String emptyDataMsg) {
-        if (jugadores != null) {
+        if (jugadores != null && jugadores[0] != null) {
             // Cabeceras
             // Calculamos los anchos de las columnas
             int idColWide = Integer.toString(cont).length() + 2;

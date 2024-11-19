@@ -38,7 +38,7 @@ public class Equipo {
 
 
     public static void printAllEquipos(Equipo[] equipos, String emptyDataMsg) {
-        if (equipos != null) {
+        if (equipos != null && equipos[0] != null) {
             // Cabeceras
             // Calculamos los anchos de las columnas
             int idColWide = Integer.toString(cont).length() + 2;
