@@ -17,7 +17,7 @@ public class Application {
 
             // Definimos unos valores por defecto
             Equipo eq1 = new Equipo("Warrios");
-            Equipo eq2 = new Equipo("Wildcats");
+            Equipo eq2 = new Equipo("Celtics");
             Equipo eq3 = new Equipo("Bulls");
 
             Jugador jug1 = new Jugador("John Smith");
@@ -374,8 +374,17 @@ public class Application {
         ConsoleUtility.waitPressEnterKey(scanner);
     }
     
+    private static void verDetalles(int indice, Equipo equipo) {
+        MenuUtility.header("Ver detalles");
+
+        Equipo.printEquipo(indice, equipo);
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+    
     private static void cambiarNombre(int indice, Jugador jugador) {
-        MenuUtility.header("Cambiar nombre");
+        MenuUtility.header("Cambiar nombre del jugador "+ jugador.getNombre());
 
         // Solicitamos los datos
         String nombreJugador = MenuUtility.solicitarCadena(scanner, "Ingrese el nombre del jugador: ");
@@ -389,9 +398,29 @@ public class Application {
         // Pausar la ejecución del programa hasta que presione ENTER
         ConsoleUtility.waitPressEnterKey(scanner);
     }
+    
+    private static void cambiarNombre(int indice, Equipo equipo) {
+        MenuUtility.header("Cambiar nombre del equipo "+ equipo.getNombre());
+
+        // Solicitamos los datos
+        String nombreEquipo = MenuUtility.solicitarCadena(scanner, "Ingrese el nombre del equipo: ");
+
+        equipo.setNombre(nombreEquipo);
+
+        equiposArr[indice - 1] = equipo;
+
+        // Actualizamos el nuevo nombre del equipo en los jugadores
+
+        Jugador.updateRelationshipWithEquipo(jugadoresArr, equipo.getId(), equipo);
+
+        System.out.println("\nEl equipo se actualizó existosamente.");
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
 
     private static void cambiarEquipo(int indice, Jugador jugador) {
-        MenuUtility.header("Cambiar equipo");
+        MenuUtility.header("Cambiar equipo del jugador "+ jugador.getNombre());
 
         System.out.println("\nLista de equipos:");
 
@@ -414,8 +443,101 @@ public class Application {
         ConsoleUtility.waitPressEnterKey(scanner);
     }
     
-    private static void seleccionarEquipo() {
+    private static void seleccionarEquipo() throws Exception{
         MenuUtility.header("Seleccionar equipo");
+
+        if (Equipo.isEmpty()) {
+            System.out.println("No hay equipos registrados.");
+
+            // Pausar la ejecución del programa hasta que presione ENTER
+            ConsoleUtility.waitPressEnterKey(scanner);
+
+            return;
+        }
+
+        System.out.println("\nLista de equpos:");
+
+        Equipo.printListEquipos(equiposArr, "");
+
+        // Solicitamos la selección del equipo a asignar
+        int indiceEquipo = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del equipo que desea seleccionar: ", 1, equiposArr.length);
+
+        subMenuEquipo(indiceEquipo, equiposArr[indiceEquipo - 1]);
+    }
+
+    private static void subMenuEquipo(int indice, Equipo equipo) throws Exception {
+        boolean showMenu = true;
+        int opMenuUsu = 0;
+        // Menú
+        String[] menu = {
+            "Ver detalles",
+            "Cambiar nombre",
+            "Agregar jugador al equipo",
+            "Mostrar jugadores del equipo",
+            "Volver al menú principal"
+        };
+
+        do {            
+            // Limpia la consola
+            ConsoleUtility.cleanScreen();
+    
+            MenuUtility.header("Equipo " + equipo.getNombre());
+            
+            System.out.println("Menú: ");
+    
+            // Muestra el menú y devuelve la opción válida ingresada por el usuario que este dentro del rango del menú
+            opMenuUsu = MenuUtility.createMenuAndGetOption(scanner, menu, "\nIngrese el número de la opción correspondiente: ");
+    
+            // Limpia la consola
+            ConsoleUtility.cleanScreen();
+    
+            switch (opMenuUsu) {
+                case 1:
+                    verDetalles(indice, equipo);
+                    break;
+                case 2:
+                    cambiarNombre(indice, equipo);
+                    break;
+                case 3:
+                    agregarJugador(equipo);
+                    break;
+                case 4:
+                    mostrarJugadoresDelEquipo(equipo);
+                    break;
+                case 5:
+                    showMenu = MenuUtility.exit("\nVolviendo al menú principal...\n", 1500);
+                    break;
+            }
+        } while (showMenu);
+    }
+
+    private static void agregarJugador(Equipo equipo) {
+        MenuUtility.header("Agregar jugador al equipo "+ equipo.getNombre());
+
+        System.out.println("\nLista de jugadores:");
+
+        Jugador.printListJugadores(jugadoresArr, "");;
+
+        // Solicitamos la selección del jugador a asignar
+        int indiceJugador = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del jugador correspondiente: ", 1, jugadoresArr.length);
+
+        jugadoresArr[indiceJugador - 1].setEquipo(equipo);
+
+        System.out.println("\nEl jugador se agregó existosamente.");
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
+    }
+
+    private static void mostrarJugadoresDelEquipo(Equipo equipo) {
+        MenuUtility.header("Mostrar jugadores del equipo "+ equipo.getNombre());
+
+        int totalJugadores = Jugador.contarJugadoresByEquipo(jugadoresArr, equipo);
+        if (totalJugadores == 0) {
+            System.out.println("\n El equipo no posee jugadores");
+        } else {
+            Jugador.printListJugadores(jugadoresArr, equipo, "");
+        }
 
 
         // Pausar la ejecución del programa hasta que presione ENTER

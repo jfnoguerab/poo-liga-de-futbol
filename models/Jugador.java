@@ -158,6 +158,54 @@ public class Jugador {
         }
     }
     
+    public static void printListJugadores(Jugador[] jugadores, Equipo equipo, String emptyDataMsg) {
+        if (jugadores != null && jugadores[0] != null) {
+            // Cabeceras
+            // Calculamos los anchos de las columnas
+            int numColWide = Integer.toString(cont).length() + 2;
+            int nameColWide = (longestNameSize > "nombre".length() ? longestNameSize : "nombre".length()) + 2;
+
+            // Creamos el formato de las cabeceras
+            String formatHeader = "| %-"+ numColWide +"s "
+                            .concat("| %-"+ nameColWide +"s |%n");
+
+            // Calculamos el total del ancho de la tabla
+            int totalLines = 7 + numColWide  + nameColWide;
+
+            // Imprimimos el borde superior de la tabla
+            System.out.printf("-".repeat(totalLines) + "%n");
+            
+            // Imprimimos las cabeceras de las columnas
+            System.out.printf(formatHeader, "#", "NOMBRE");
+
+            // Imprimimos el borde que divide las cabeceras del contenido
+            System.out.printf("-".repeat(totalLines) + "%n");
+            
+
+            // Contenido
+            // Creamos el formato del contenido
+            String formatContent = "| %-"+ numColWide +"s "
+                            .concat("| %-"+ nameColWide +"s |%n");
+
+
+            // Imprimimos el contenido
+            int num = 1;
+            for (Jugador jugador : jugadores) {
+                if (jugador.getEquipo() == equipo) {
+                    System.out.printf(formatContent, num,
+                                                    jugador.getNombre());
+                }
+                num++;
+            }
+            // Imprimimos el borde inferior para cerrar la tabla
+            System.out.printf("-".repeat(totalLines) + "%n");
+
+
+        } else {
+            System.out.println(emptyDataMsg);
+        }
+    }
+    
     public static void printJugador(int indice, Jugador jugador) {
         if (jugador != null) {
             // Cabeceras
@@ -218,11 +266,30 @@ public class Jugador {
         }
         return jugadoresUpArr;
     }
+    
+    public static int contarJugadoresByEquipo(Jugador[] jugadoresArr, Equipo equipo) {
+        int totalJugadores = 0;
+        for (Jugador itemJugador : jugadoresArr) {
+            if (itemJugador.getEquipo() == equipo) {
+                totalJugadores++;
+            }
+            
+        }
+        return totalJugadores;
+    }
 
     public static void clearRelationshipWithEquipo(Jugador[] jugadoresArr, Equipo equipo) {
         for (int i = 0; i < jugadoresArr.length; i++) {
             if (jugadoresArr[i].getEquipo() == equipo) {
                 jugadoresArr[i].setEquipo(null);
+            }
+        }
+    }
+    
+    public static void updateRelationshipWithEquipo(Jugador[] jugadoresArr, int idEquipo, Equipo upEquipo) {
+        for (int i = 0; i < jugadoresArr.length; i++) {
+            if (jugadoresArr[i].getEquipo().getId() == idEquipo) {
+                jugadoresArr[i].setEquipo(upEquipo);
             }
         }
     }
