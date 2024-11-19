@@ -20,4 +20,37 @@ Para esto deberás generar una clase `Jugador` y una `Equipo`. Para relacionar a
 
 ---
 
+### Actividad: Liga de fútbol II
+
+Para continuar con el sistema de gestión de la liga de fútbol es necesario agregar las siguientes funcionalidades al menú:
+
+1. **Eliminar jugador:**  Debe permitir seleccionar un jugador para ser eliminado de una lista (tipo array) total de jugadores.
+
+2. **Eliminar Equipo:**  Debe permitir eliminar un equipo de una lista total de equipos.
+
+3. **Seleccionar jugador:** Con esta opción, podrás seleccionar un jugador específico para ver o modificar sus detalles. Esto debería llevar a un submenú con las siguientes opciones:
+
+    1. **Ver detalles:** Muestra el nombre del jugador y el equipo al que está asignado.
+    
+    2. **Cambiar nombre:** Permite al usuario cambiar el nombre del jugador.
+
+    3. **Cambiar equipo:** Permite al usuario cambiar el equipo al que está asignado el jugador.
+
+    4. **Regresar al menú principal.**
+
+4. **Seleccionar equipo:** Al elegir esta opción, se debe mostrar la lista de equipos, seleccionar uno y luego mostrar el siguiente submenú con las siguientes opciones:
+
+    1. **Ver detalles.**
+
+    2. **Cambiar nombre:** Debes asegurarte que cambie el nombre de la instancia de equipo que pertenece a cada jugador también.
+
+    3. **Agregar jugador al equipo:** se debe mostrar la lista de jugadores para que el usuario elija a cual asignarle el equipo.
+
+    4. **Mostrar jugadores del equipo.**
+
+    5. **Regresar al menú principal.**
+
+
+---
+
 © 2024 | Desarrollado por [Fernando Noguera](https://www.linkedin.com/in/jfnoguerab/)
