@@ -50,8 +50,12 @@ public class Jugador {
             }
         }
     }
-    
 
+    public static boolean isEmpty() {
+        // validamos si el contador de instancias está vacío
+        return cont == 0;
+    }
+    
     public static void printAllJugadores(Jugador[] jugadores, String emptyDataMsg) {
         if (jugadores != null && jugadores[0] != null) {
             // Cabeceras
