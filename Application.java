@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 import models.Equipo;
@@ -51,9 +52,7 @@ public class Application {
             // Opciones del menú
             switch (opMenuUsu) {
                 case 1:
-                    MenuUtility.header("Crear jugador");
-                    // Pausar la ejecución del programa hasta que presione ENTER
-                    ConsoleUtility.waitPressEnterKey(scanner);
+                    crearJugador();
                     break;
                 case 2:
                     MenuUtility.header("Crear equipo");
@@ -90,5 +89,41 @@ public class Application {
             ConsoleUtility.cleanScreen();
             
         } while (showMenu);
+    }
+
+    private static void crearJugador() {
+        MenuUtility.header("Crear jugador");
+
+        // Solicitamos los datos
+        String nombreJugador = MenuUtility.solicitarCadena(scanner, "Ingrese el nombre del jugador: ");
+
+        // Si ya hay registrado algún jugador debemos aumentar en 1 el tamaño del arreglo
+        if (jugadoresArr[jugadoresArr.length - 1] != null) {
+            jugadoresArr = Arrays.copyOf(jugadoresArr, jugadoresArr.length + 1);
+        }
+
+        // Creamos la instancia del jugador
+        Jugador nuevoJugador = new Jugador(nombreJugador);
+
+        if (Equipo.isEmpty()) {
+            System.out.println("No hay equipos disponibles. El jugador se creará sin equipo.");
+        } else {
+            System.out.println("Equipos disponibles:");
+            Equipo.printAllEquipos(equiposArr, "");
+            // Solicitamos la selección del equipo a asignar
+            int indiceEquipo = MenuUtility.solicitaNumeroMenu(scanner, "\nIngrese el número del equipo correspondiente o 0 para ninguno: ", 0, equiposArr.length);
+
+            if (indiceEquipo >= 1 && indiceEquipo <= equiposArr.length) {
+                nuevoJugador.setEquipo(equiposArr[indiceEquipo - 1]);
+            }
+        }
+
+        // Asignamos los valores
+        jugadoresArr[jugadoresArr.length - 1] = nuevoJugador;
+
+        System.out.println("Jugador creado exitosamente.");
+
+        // Pausar la ejecución del programa hasta que presione ENTER
+        ConsoleUtility.waitPressEnterKey(scanner);
     }
 }

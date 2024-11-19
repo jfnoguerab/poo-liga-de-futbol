@@ -82,5 +82,9 @@ public class Equipo {
         }
     }
 
+    public static boolean isEmpty() {
+        // validamos si el contador de instancias está vacío
+        return cont == 0;
+    }
     
 }
